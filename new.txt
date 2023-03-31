@@ -1,0 +1,63 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class SubscriptionCalculator {
+  String name;
+  double mondayPrice;
+  double tuesdayPrice;
+  double wednesdayPrice;
+  double thursdayPrice;
+  double fridayPrice;
+  double saturdayPrice;
+  double sundayPrice;
+  
+  public SubscriptionCalculator(String name, double mondayPrice, double tuesdayPrice, double wednesdayPrice, double thursdayPrice, double fridayPrice, double saturdayPrice, double sundayPrice) {
+    this.name = name;
+    this.mondayPrice = mondayPrice;
+    this.tuesdayPrice = tuesdayPrice;
+    this.wednesdayPrice = wednesdayPrice;
+    this.thursdayPrice = thursdayPrice;
+    this.fridayPrice = fridayPrice;
+    this.saturdayPrice = saturdayPrice;
+    this.sundayPrice = sundayPrice;
+  }
+  
+  public double getWeeklyPrice() {
+    return mondayPrice + tuesdayPrice + wednesdayPrice + thursdayPrice + fridayPrice + saturdayPrice + sundayPrice;
+  }
+}
+
+public class SubscriptionCalculator {
+  private List<SubscriptionCalculator> subscriptions;
+  
+  public SubscriptionCalculator() {
+    subscriptions = new ArrayList<>();
+    subscriptions.add(new SubscriptionCalculator("TOI", 3, 3, 3, 3, 3, 5, 6));
+    subscriptions.add(new SubscriptionCalculator("Hindu", 2.5, 2.5, 2.5, 2.5, 2.5, 4, 4));
+    subscriptions.add(new SubscriptionCalculator("ET", 4, 4, 4, 4, 4, 4, 10));
+    subscriptions.add(new SubscriptionCalculator("BM", 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5));
+    subscriptions.add(new SubscriptionCalculator("HT", 2, 2, 2, 2, 2, 4, 4));
+  }
+  
+  public List<List<String>> calculateSubscriptions(double budget) {
+    List<List<String>> result = new ArrayList<>();
+    for (int i = 0; i < subscriptions.size(); i++) {
+      for (int j = i + 1; j < subscriptions.size(); j++) {
+        if (subscriptions.get(i).getWeeklyPrice() + subscriptions.get(j).getWeeklyPrice() == budget) {
+          List<String> combination = new ArrayList<>();
+          combination.add(subscriptions.get(i).name);
+          combination.add(subscriptions.get(j).name);
+          result.add(combination);
+        }
+      }
+    }
+    return result;
+  }
+  
+  public static void main(String[] args)
+  {
+    SubscriptionCalculator calculator = new SubscriptionCalculator();
+    System.out.println(calculator.calculateSubscriptions(40));
+    System.out.println(calculator.calculateSubscriptions(35));
+  }
+}
